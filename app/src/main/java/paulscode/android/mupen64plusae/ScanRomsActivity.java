@@ -1,5 +1,6 @@
 package paulscode.android.mupen64plusae;
 
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,7 +15,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
 
-import org.mupen64plusae.v3.alpha.R;
+import org.mupen64plusae.v3.fzurita.R;
 
 import java.io.File;
 import java.util.ArrayList;

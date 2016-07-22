@@ -16,7 +16,7 @@ import android.widget.ImageView;
 
 import com.bda.controller.Controller;
 
-import org.mupen64plusae.v3.alpha.R;
+import org.mupen64plusae.v3.fzurita.R;
 
 import java.util.ArrayList;
 import java.util.List;

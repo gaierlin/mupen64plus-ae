@@ -20,12 +20,15 @@
  */
 package paulscode.android.mupen64plusae.dialog;
 
+import android.content.Context;
+
+import paulscode.android.mupen64plusae.util.DeviceUtil;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 
-import org.mupen64plusae.v3.alpha.R;
+import org.mupen64plusae.v3.fzurita.R;
 
 import paulscode.android.mupen64plusae.ActivityHelper;
 import paulscode.android.mupen64plusae.persistent.AppData;

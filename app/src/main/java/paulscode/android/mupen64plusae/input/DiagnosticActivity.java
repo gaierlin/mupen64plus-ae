@@ -21,6 +21,14 @@
 package paulscode.android.mupen64plusae.input;
 
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+
+import com.bda.controller.Controller;
+import com.bda.controller.ControllerListener;
+
+import paulscode.android.mupen64plusae.util.LocaleContextWrapper;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -34,7 +42,7 @@ import com.bda.controller.Controller;
 import com.bda.controller.ControllerListener;
 import com.bda.controller.StateEvent;
 
-import org.mupen64plusae.v3.alpha.R;
+import org.mupen64plusae.v3.fzurita.R;
 
 import java.util.Locale;
 

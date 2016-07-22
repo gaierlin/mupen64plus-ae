@@ -24,7 +24,12 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 
-import org.mupen64plusae.v3.alpha.R;
+import paulscode.android.mupen64plusae.util.LocaleContextWrapper;
+import android.content.Context;
+import android.os.Bundle;
+import android.text.TextUtils;
+
+import org.mupen64plusae.v3.fzurita.R;
 
 import paulscode.android.mupen64plusae.compat.AppCompatPreferenceActivity;
 import paulscode.android.mupen64plusae.util.LocaleContextWrapper;

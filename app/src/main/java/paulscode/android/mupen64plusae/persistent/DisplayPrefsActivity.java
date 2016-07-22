@@ -22,12 +22,19 @@ package paulscode.android.mupen64plusae.persistent;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
+
+import paulscode.android.mupen64plusae.compat.AppCompatPreferenceActivity;
+import paulscode.android.mupen64plusae.preference.PrefUtil;
+import paulscode.android.mupen64plusae.util.LocaleContextWrapper;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.support.v7.preference.PreferenceManager;
 import android.text.TextUtils;
 
-import org.mupen64plusae.v3.alpha.R;
+import org.mupen64plusae.v3.fzurita.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;

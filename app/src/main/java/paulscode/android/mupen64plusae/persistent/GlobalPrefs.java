@@ -36,7 +36,7 @@ import android.view.WindowManager;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.WordUtils;
-import org.mupen64plusae.v3.alpha.R;
+import org.mupen64plusae.v3.fzurita.R;
 
 import java.io.File;
 import java.io.IOException;

@@ -20,6 +20,8 @@
  */
 package paulscode.android.mupen64plusae;
 
+import java.io.File;
+
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.RecyclerView;
@@ -34,7 +36,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.mupen64plusae.v3.alpha.R;
+import org.mupen64plusae.v3.fzurita.R;
 
 import java.io.File;
 import java.util.Comparator;

@@ -20,6 +20,15 @@
  */
 package paulscode.android.mupen64plusae.task;
 
+import android.os.Binder;
+import android.os.IBinder;
+import android.os.Looper;
+
+import java.io.File;
+
+import paulscode.android.mupen64plusae.persistent.AppData;
+import paulscode.android.mupen64plusae.persistent.GlobalPrefs;
+import paulscode.android.mupen64plusae.util.TextureInfo;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
@@ -35,7 +44,7 @@ import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import org.mupen64plusae.v3.alpha.R;
+import org.mupen64plusae.v3.fzurita.R;
 
 import java.io.File;
 
