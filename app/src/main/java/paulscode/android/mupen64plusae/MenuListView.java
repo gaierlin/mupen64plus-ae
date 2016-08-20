@@ -41,6 +41,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import org.mupen64plusae.v3.fzurita.R;
+import java.util.List;
 
 /* ExpandableListView which stores its data set as a Menu hierarchy */
 
@@ -64,6 +65,20 @@ public class MenuListView extends ExpandableListView
         Menu menu = new MenuBuilder( context );
         Activity activity = (Activity) context;
         activity.getMenuInflater().inflate( menuResource, menu );
+        setMenu( menu );
+    }
+
+    public void setMenuList(List<String> itemList)
+    {
+        Context context = getContext();
+        Menu menu = new MenuBuilder( context );
+
+        //Fill the values
+        for (int index = 0; index < itemList.size(); ++index)
+        {
+            menu.add(0, index, index, itemList.get(index));
+        }
+
         setMenu( menu );
     }
     
