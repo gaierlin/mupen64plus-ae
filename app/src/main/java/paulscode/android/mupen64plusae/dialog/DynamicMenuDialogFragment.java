@@ -2,6 +2,7 @@ package paulscode.android.mupen64plusae.dialog;
 
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
@@ -39,6 +40,7 @@ public class DynamicMenuDialogFragment extends DialogFragment
 
     private List<String> mOptionItems = null;
     private List<String> mOptionTitles = null;
+    private int mDialogId = 0;
 
     public static DynamicMenuDialogFragment newInstance(int dialogId, String title, List<String> options, List<String> optionTitles)
     {
@@ -68,7 +70,7 @@ public class DynamicMenuDialogFragment extends DialogFragment
     {
         setRetainInstance(true);
 
-        final int dialogId = getArguments().getInt(STATE_DIALOG_ID);
+        mDialogId = getArguments().getInt(STATE_DIALOG_ID);
         String title = getArguments().getString(STATE_TITLE);
 
 
@@ -99,12 +101,11 @@ public class DynamicMenuDialogFragment extends DialogFragment
                 @Override
                 public void onClick(MenuItem menuItem)
                 {
-                    ((OnDynamicDialogMenuItemSelectedListener) getActivity()).onDialogMenuItemSelected(dialogId, mOptionItems.get(menuItem.getItemId()));
+                    ((OnDynamicDialogMenuItemSelectedListener) getActivity()).onDialogMenuItemSelected(mDialogId, mOptionItems.get(menuItem.getItemId()));
 
                     dismiss();
                 }
             });
-
         }
         else
         {
@@ -116,6 +117,28 @@ public class DynamicMenuDialogFragment extends DialogFragment
         builder.setView(menuList);
 
         return builder.create();
+    }
+
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+
+        Dialog dialog =  getDialog();
+
+        if(dialog != null)
+        {
+            //Detect outside clicks
+            if (getActivity() instanceof OnDynamicDialogMenuItemSelectedListener)
+            {
+                dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        ((OnDynamicDialogMenuItemSelectedListener) getActivity()).onDialogMenuItemSelected(mDialogId, null);
+                    }
+                });
+            }
+        }
     }
 
     @Override
