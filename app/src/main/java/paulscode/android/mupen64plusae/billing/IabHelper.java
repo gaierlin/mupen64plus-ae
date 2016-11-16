@@ -1123,19 +1123,22 @@ public class IabHelper {
         Bundle querySkus = new Bundle();
         querySkus.putStringArrayList("ITEM_ID_LIST", skuList);
 
-        Bundle skuDetails = mService.getSkuDetails(3,packageName, "inapp", querySkus);
+        if(mService != null)
+        {
+            Bundle skuDetails = mService.getSkuDetails(3,packageName, "inapp", querySkus);
 
+            int response = skuDetails.getInt("RESPONSE_CODE");
+            if (response == 0) {
+                ArrayList<String> responseList = skuDetails.getStringArrayList("DETAILS_LIST");
 
-        int response = skuDetails.getInt("RESPONSE_CODE");
-        if (response == 0) {
-            ArrayList<String> responseList = skuDetails.getStringArrayList("DETAILS_LIST");
-
-            for (String thisResponse : responseList) {
-                JSONObject object = new JSONObject(thisResponse);
-                String sku = object.getString("productId");
-                return object.getString("price");
+                for (String thisResponse : responseList) {
+                    JSONObject object = new JSONObject(thisResponse);
+                    String sku = object.getString("productId");
+                    return object.getString("price");
+                }
             }
         }
+
         return null;
     }
 }
