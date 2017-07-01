@@ -45,8 +45,9 @@
 
 void LoadTex (int id, int tmu);
 
-wxUint8 tex1[1024*1024*4];		// temporary texture
-wxUint8 tex2[1024*1024*4];
+static const int TEX_SIZE = 1024*1024*4;
+wxUint8 tex1[TEX_SIZE];		// temporary texture
+wxUint8 tex2[TEX_SIZE];
 wxUint8 *texture;
 wxUint8 *texture_buffer = tex1;
 
@@ -1502,22 +1503,22 @@ void LoadTex (int id, int tmu)
       // Convert the texture to ARGB 4444
       if (LOWORD(result) == GR_TEXFMT_ARGB_1555)
       {
-        TexConv_ARGB1555_ARGB4444 ((texture), (tex2), real_x, real_y);
+        TexConv_ARGB1555_ARGB4444 ((texture), (tex2), real_x, real_y, TEX_SIZE);
         texture = tex2;
       }
       else if (LOWORD(result) == GR_TEXFMT_ALPHA_INTENSITY_88)
       {
-        TexConv_AI88_ARGB4444 ((texture), (tex2), real_x, real_y);
+        TexConv_AI88_ARGB4444 ((texture), (tex2), real_x, real_y, TEX_SIZE);
         texture = tex2;
       }
       else if (LOWORD(result) == GR_TEXFMT_ALPHA_INTENSITY_44)
       {
-        TexConv_AI44_ARGB4444 ((texture), (tex2), real_x, real_y);
+        TexConv_AI44_ARGB4444 ((texture), (tex2), real_x, real_y, TEX_SIZE);
         texture = tex2;
       }
       else if (LOWORD(result) == GR_TEXFMT_ALPHA_8)
       {
-        TexConv_A8_ARGB4444 ((texture), (tex2), real_x, real_y);
+        TexConv_A8_ARGB4444 ((texture), (tex2), real_x, real_y, TEX_SIZE);
         texture = tex2;
       }
       /*else if (LOWORD(result) == GR_TEXFMT_ARGB_4444)

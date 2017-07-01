@@ -133,35 +133,63 @@ static inline void texConv_A8_ARGB4444(uint8_t *src, uint8_t *dst, int size)
   while ( v5 );
 }
 
-void TexConv_ARGB1555_ARGB4444 (unsigned char * src, unsigned char * dst, int width, int height)
+void TexConv_ARGB1555_ARGB4444 (unsigned char * src, unsigned char * dst, int width, int height, int max)
 {
   int size = (width * height) >> 1;	// Hiroshi Morii <koolsmoky@users.sourceforge.net>
   // 2 pixels are converted in one loop
   // NOTE: width * height must be a multiple of 2
+
+  int maxUint32 = max/4;
+  if(size > maxUint32)
+  {
+    size = maxUint32;
+  }
+
   texConv_ARGB1555_ARGB4444(src, dst, size);
 }
 
-void TexConv_AI88_ARGB4444 (unsigned char * src, unsigned char * dst, int width, int height)
+void TexConv_AI88_ARGB4444 (unsigned char * src, unsigned char * dst, int width, int height, int max)
 {
   int size = (width * height) >> 1;	// Hiroshi Morii <koolsmoky@users.sourceforge.net>
   // 2 pixels are converted in one loop
   // NOTE: width * height must be a multiple of 2
+
+  int maxUint32 = max/4;
+  if(size > maxUint32)
+  {
+    size = maxUint32;
+  }
+
   texConv_AI88_ARGB4444(src, dst, size);
 }
 
-void TexConv_AI44_ARGB4444 (unsigned char * src, unsigned char * dst, int width, int height)
+void TexConv_AI44_ARGB4444 (unsigned char * src, unsigned char * dst, int width, int height, int max)
 {
   int size = (width * height) >> 2;	// Hiroshi Morii <koolsmoky@users.sourceforge.net>
   // 4 pixels are converted in one loop
   // NOTE: width * height must be a multiple of 4
+
+  int maxUint32 = max/4;
+  if(size > maxUint32)
+  {
+    size = maxUint32;
+  }
+
   texConv_AI44_ARGB4444(src, dst, size);
 }
 
-void TexConv_A8_ARGB4444 (unsigned char * src, unsigned char * dst, int width, int height)
+void TexConv_A8_ARGB4444 (unsigned char * src, unsigned char * dst, int width, int height, int max)
 {
   int size = (width * height) >> 2;	// Hiroshi Morii <koolsmoky@users.sourceforge.net>
   // 4 pixels are converted in one loop
   // NOTE: width * height must be a multiple of 4
+
+  int maxUint32 = max/4;
+  if(size > maxUint32)
+  {
+    size = maxUint32;
+  }
+
   texConv_A8_ARGB4444(src, dst, size);
 }
 
