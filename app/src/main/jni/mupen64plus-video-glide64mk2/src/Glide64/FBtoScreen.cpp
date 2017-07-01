@@ -236,9 +236,11 @@ static void DrawFrameBufferToScreen256(FB_TO_SCREEN_INFO & fb_info)
       cur_height = (256*(h+1) < height) ? 256 : h_tail;
       cur_tail = 256 - cur_width;
       wxUint16 * dst = tex;
+      int textureOffsetBytes = 0;
+
       if (fb_info.size == 2)
       {
-        for (wxUint32 y=0; y < cur_height; y++)
+        for (wxUint32 y=0; y < cur_height && textureOffsetBytes < TEX_SIZE; y++)
         {
           for (wxUint32 x=0; x < cur_width; x++)
           {
@@ -249,6 +251,7 @@ static void DrawFrameBufferToScreen256(FB_TO_SCREEN_INFO & fb_info)
             *(dst++) = (c >> 1) | ((c&1)<<15);
           }
           dst += cur_tail;
+          textureOffsetBytes += cur_tail*2;
         }
       }
       else
@@ -291,10 +294,10 @@ static void DrawFrameBufferToScreen256(FB_TO_SCREEN_INFO & fb_info)
       float lr_v = (float)(cur_height-1);
       // Make the vertices
       VERTEX v[4] = {
-        { ul_x, ul_y, 1, 1, 0.5f, 0.5f, 0.5f, 0.5f, {0.5f, 0.5f, 0.5f, 0.5f} },
-        { lr_x, ul_y, 1, 1, lr_u, 0.5f, lr_u, 0.5f, {lr_u, 0.5f, lr_u, 0.5f} },
-        { ul_x, lr_y, 1, 1, 0.5f, lr_v, 0.5f, lr_v, {0.5f, lr_v, 0.5f, lr_v} },
-        { lr_x, lr_y, 1, 1, lr_u, lr_v, lr_u, lr_v, {lr_u, lr_v, lr_u, lr_v} }
+              { ul_x, ul_y, 1, 1, 0.5f, 0.5f, 0.5f, 0.5f, {0.5f, 0.5f, 0.5f, 0.5f} },
+              { lr_x, ul_y, 1, 1, lr_u, 0.5f, lr_u, 0.5f, {lr_u, 0.5f, lr_u, 0.5f} },
+              { ul_x, lr_y, 1, 1, 0.5f, lr_v, 0.5f, lr_v, {0.5f, lr_v, 0.5f, lr_v} },
+              { lr_x, lr_y, 1, 1, lr_u, lr_v, lr_u, lr_v, {lr_u, lr_v, lr_u, lr_v} }
       };
       grDrawTriangle (&v[0], &v[2], &v[1]);
       grDrawTriangle (&v[2], &v[3], &v[1]);
@@ -351,9 +354,11 @@ bool DrawFrameBufferToScreen(FB_TO_SCREEN_INFO & fb_info)
     wxUint32 idx;
     const wxUint32 bound = (BMASK+1-fb_info.addr) >> 1;
     bool empty = true;
-    for (wxUint32 y=0; y < height; y++)
+    int dstBoundCheck = 0;
+
+    for (wxUint32 y=0; y < height && dstBoundCheck < TEX_SIZE; y++)
     {
-      for (wxUint32 x=0; x < width; x++)
+      for (wxUint32 x=0; x < width && dstBoundCheck < TEX_SIZE; x++)
       {
         idx = (x+y*fb_info.width)^1;
         if (idx >= bound)
@@ -361,8 +366,10 @@ bool DrawFrameBufferToScreen(FB_TO_SCREEN_INFO & fb_info)
         c = src[idx];
         if (c) empty = false;
         *(dst++) = (c >> 1) | ((c&1)<<15);
+        dstBoundCheck++;
       }
       dst += texwidth-width;
+      dstBoundCheck += texwidth-width;
     }
     if (empty)
       return false;
@@ -378,17 +385,21 @@ bool DrawFrameBufferToScreen(FB_TO_SCREEN_INFO & fb_info)
     wxUint32 col;
     wxUint32 idx;
     const wxUint32 bound = (BMASK+1-fb_info.addr) >> 2;
-    for (wxUint32 y=0; y < height; y++)
+    int dstBoundCheck = 0;
+
+    for (wxUint32 y=0; y < height && dstBoundCheck < TEX_SIZE; y++)
     {
-      for (wxUint32 x=0; x < width; x++)
+      for (wxUint32 x=0; x < width && dstBoundCheck < TEX_SIZE; x++)
       {
         idx = x+y*fb_info.width;
         if (idx >= bound)
           break;
         col = src[idx];
         *(dst++) = (col >> 8) | 0xFF000000;
+        dstBoundCheck++;
       }
       dst += texwidth-width;
+      dstBoundCheck += texwidth-width;
     }
     t_info.format = GR_TEXFMT_ARGB_8888;
     t_info.data = tex;
