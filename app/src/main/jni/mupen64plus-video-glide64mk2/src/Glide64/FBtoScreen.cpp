@@ -159,11 +159,18 @@ static void DrawRE2Video256(FB_TO_SCREEN_INFO & fb_info)
   wxUint16 * dst = tex;
   wxUint32 col;
   wxUint8 r, g, b;
+  wxUint32 idx;
+  const wxUint32 bound = (BMASK+1-fb_info.addr) >> 1;
+
   fb_info.height = min(256, fb_info.height);
   for (wxUint32 h = 0; h < fb_info.height; h++)
   {
     for (wxUint32 w = 0; w < 256; w++)
     {
+      idx = (h+w*fb_info.width)^1;
+      if (idx >= bound)
+        break;
+
       col = *(src++);
       r = (wxUint8)((col >> 24)&0xFF);
       r = (wxUint8)((float)r / 255.0f * 31.0f);
