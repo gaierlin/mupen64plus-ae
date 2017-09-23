@@ -125,6 +125,8 @@ public class CoreService extends Service implements NativeImports.OnFpsChangedLi
     private int mLastFpsChangedTime;
     private Handler mFpsCangedHandler;
 
+    Handler mDelayedStateLoad = new Handler();
+
     final static int ONGOING_NOTIFICATION_ID = 1;
 
     // Our handler for received Intents. This will be called whenever an Intent
@@ -412,12 +414,6 @@ public class CoreService extends Service implements NativeImports.OnFpsChangedLi
             arglist.add( "--configdir" );
             arglist.add( mCoreUserConfigDir );
 
-            if(!mIsRestarting)
-            {
-                arglist.add( "--savestate" );
-                arglist.add( mSaveToLoad );
-            }
-
             if( !mIsFrameLimiterEnabled )
             {
                 arglist.add( "--nospeedlimit" );
@@ -673,6 +669,23 @@ public class CoreService extends Service implements NativeImports.OnFpsChangedLi
         if(mIsPaused)
         {
             NativeExports.emuPause();
+        }
+
+        //Load save states only after game is done loading, otherwise controller
+        //input doesn't work because core didn't get pif setup from game at startup.
+        //This is a core bug and old behavior should be restored once the core bug is fixed
+        if(!mIsRestarting && mSaveToLoad != null)
+        {
+            final String saveToLoad = mSaveToLoad;
+            mDelayedStateLoad.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Log.i("CoreService", "Loading save state " + saveToLoad);
+                    NativeExports.emuLoadFile( saveToLoad );
+                }
+            }, 500);
+
+            mSaveToLoad = null;
         }
     }
 }
